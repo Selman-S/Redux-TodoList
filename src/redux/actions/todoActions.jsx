@@ -10,6 +10,7 @@ export const addTodo = (payload) => {
 };
 
 export const deleteTodo = (payload) => {
+ 
   return { type: DELETE_TODO, payload: payload };
 };
 

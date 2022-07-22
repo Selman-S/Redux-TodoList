@@ -1,7 +1,7 @@
 import React from 'react';
 import okLogo from '../../assets/ok.png';
 import deleteLogo from '../../assets/delete.png';
-import { toggleTodo } from '../../redux/actions/todoActions';
+import { deleteTodo, toggleTodo } from '../../redux/actions/todoActions';
 import { useDispatch } from 'react-redux';
 
 const TodoItem = ({ completed, text, id }) => {
@@ -16,14 +16,19 @@ const TodoItem = ({ completed, text, id }) => {
   
   
   
-  const handleDelete = () => {};
+  const handleDelete = () => {
+   
+
+    
+    dispatch(deleteTodo(id )) 
+  };
 
   const styled = {
     textDecoration: completed ? 'line-through' : 'none',
     backgroundColor: completed ? '#A9A9A9' : 'orange',
     borderRadius: '5px',
   };
-console.log(completed, text, id );
+
 
   return (
     <div style={styled} className="todo-list">

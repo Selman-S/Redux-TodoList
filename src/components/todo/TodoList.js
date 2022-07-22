@@ -13,10 +13,11 @@ const TodoList = () => {
     toastSuccess('Cleared all todos')
   };
 
+
   return (
     <div>
       <div>
-        {todoList.map((todo) => (
+        {todoList?.map((todo) => todo && (
           <TodoItem key={todo.id} {...todo} />
   
            

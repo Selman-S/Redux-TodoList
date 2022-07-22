@@ -5,15 +5,27 @@ import {
   TOGGLE_TODO,
 } from '../types/todoTypes';
 
-const initialState = {
-  todoList: [
 
-  ],
-};
+if (localStorage.getItem('initialState')) {
+  console.log('ali')
+  var initialState = JSON.parse(localStorage.getItem('initialState'))
+} else {
+  localStorage.setItem('initialState',JSON.stringify({ todoList: [
+   
+],}) ) ;
+  var initialState =JSON.parse(localStorage.getItem('initialState'))
+}
+
 
 const todoReducer = (state = initialState, { type, payload }) => {
   switch (type) {
     case ADD_TODO:
+      localStorage.setItem('initialState',JSON.stringify({
+        todoList: [
+          ...state.todoList,
+          { id: new Date().getTime(), text: payload, completed: false },
+        ],
+      }));
       return {
         todoList: [
           ...state.todoList,
@@ -21,18 +33,30 @@ const todoReducer = (state = initialState, { type, payload }) => {
         ],
       };
     case DELETE_TODO: 
-  
-      return { ...state, ...payload };
+    localStorage.setItem('initialState',JSON.stringify({
+      todoList: [
+        ...(state.todoList.filter((todo) =>todo.id!==payload
+  ))]
+
+    }));
+      return {
+        todoList: [
+          ...(state.todoList.filter((todo) =>todo.id!==payload
+    ))
+        ]};
     case TOGGLE_TODO:
-    console.log(payload)
-    console.log(state.todoList)
-    const newPayload = state.todoList.filter((item)=>item.id===payload.id).map((item)=>item.completed? item.completed=false : item.completed=true)
-    console.log(newPayload)
+
+   state.todoList.filter((item)=>item.id===payload.id).map((item)=>item.completed? item.completed=false : item.completed=true)
+
       return  {   
         todoList:[
           ...state.todoList,         ] };
     case CLEAR_TODO:
-      return initialState;
+      const clearState = { todoList: [
+   
+      ],}
+      localStorage.setItem('initialState',JSON.stringify(clearState))
+      return clearState;
     default:
       return state;
   }
